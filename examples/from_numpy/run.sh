@@ -1,0 +1,1 @@
+DYLD_LIBRARY_PATH="$(rustc --print sysroot)/lib:$DYLD_LIBRARY_PATH" python main.py
