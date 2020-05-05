@@ -4,7 +4,7 @@ use std::os::raw::c_void;
 pub const DLPACK_VERSION: usize = 020;
 
 /// The device type in DLContext.
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum DLDeviceType {
     /// CPU device
     DLCPU = 1,
@@ -39,13 +39,13 @@ pub enum DLDeviceType {
 
 /// A Device context for Tensor and operator.
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Default)]
 pub struct DLContext {
     /// The device type used in the device.
-    device_type: DLDeviceType,
+    pub device_type: DLDeviceType,
 
     /// The device index
-    device_id: i32,
+    pub device_id: i32,
 }
 
 /// The type code options DLDataType.
@@ -120,27 +120,6 @@ pub struct DLTensor {
     pub byte_offset: u64,
 }
 
-// impl Default for DLTensor {
-//     fn default() -> Self {
-//         DLTensor {
-//             data: ptr::null_mut(),
-//             ctx: DLContext {
-//                 device_type: DLDeviceType::DLCPU,
-//                 device_id: 0,
-//             },
-//             ndim: 0,
-//             dtype: DLDataType {
-//                 code: DLDataTypeCode::DLFloat as u8,
-//                 bits: 32,
-//                 lanes: 1,
-//             },
-//             shape: ptr::null_mut(),
-//             strides: ptr::null_mut(),
-//             byte_offset: 0,
-//         }
-//     }
-// }
-
 /// C Tensor object, manage memory of DLTensor. This data structure is
 /// intended to facilitate the borrowing of DLTensor by another framework. It is
 /// not meant to transfer the tensor. When the borrowing framework doesn't need
@@ -162,3 +141,26 @@ pub struct DLManagedTensor {
     /// The destructors deletes the argument self as well.
     pub deleter: Option<unsafe extern "C" fn(self_: *mut DLManagedTensor)>,
 }
+
+// ============================ Extension ============================
+
+// impl Default for DLTensor {
+//     fn default() -> Self {
+//         DLTensor {
+//             data: ptr::null_mut(),
+//             ctx: DLContext {
+//                 device_type: DLDeviceType::DLCPU,
+//                 device_id: 0,
+//             },
+//             ndim: 0,
+//             dtype: DLDataType {
+//                 code: DLDataTypeCode::DLFloat as u8,
+//                 bits: 32,
+//                 lanes: 1,
+//             },
+//             shape: ptr::null_mut(),
+//             strides: ptr::null_mut(),
+//             byte_offset: 0,
+//         }
+//     }
+// }
