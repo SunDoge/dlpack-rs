@@ -1,6 +1,6 @@
-use std::os::raw::c_void;
-// use std::ptr;
+use std::ffi::c_void;
 
+/// This is for parsing only.
 pub const DLPACK_VERSION: usize = 020;
 
 /// The device type in DLContext.
