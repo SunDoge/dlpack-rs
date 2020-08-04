@@ -2,7 +2,7 @@ import numpy as np
 import gc
 import ctypes
 
-libmain = ctypes.cdll.LoadLibrary("../../target/debug/libfrom_numpy.dylib")
+libmain = ctypes.cdll.LoadLibrary("../../target/debug/libfrom_numpy.so")
 
 
 class DLContext(ctypes.Structure):

@@ -9,7 +9,7 @@ publish = false
 
 [dependencies]
 dlpack-rs = {path = "../.."}
-libc = "*"
+libc = "0.2.74"
 
 [lib]
 crate-type = ["dylib"]

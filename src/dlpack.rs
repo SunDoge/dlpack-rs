@@ -1,4 +1,5 @@
 use std::ffi::c_void;
+// use std::os::raw::c_void;
 
 /// This is for parsing only.
 pub const DLPACK_VERSION: usize = 020;
