@@ -51,6 +51,7 @@ pub struct DLContext {
 }
 
 /// The type code options DLDataType.
+#[repr(u8)]
 #[derive(Debug, Copy, Clone)]
 pub enum DLDataTypeCode {
     DLInt = 0,
