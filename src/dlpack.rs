@@ -5,6 +5,7 @@ use std::ffi::c_void;
 pub const DLPACK_VERSION: usize = 020;
 
 /// The device type in DLContext.
+#[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum DLDeviceType {
     /// CPU device
@@ -50,7 +51,6 @@ pub struct DLContext {
 }
 
 /// The type code options DLDataType.
-#[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub enum DLDataTypeCode {
     DLInt = 0,
