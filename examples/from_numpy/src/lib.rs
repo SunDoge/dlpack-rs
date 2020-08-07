@@ -1,6 +1,6 @@
 // use dlpack_rs::dlpack;
 // use dlpack_rs::dlpack_raw;
-use dlpack_rs::dlpack::*;
+use dlpack::*;
 // use dlpack_rs::dlpack_raw::*;
 use std::ptr;
 
@@ -18,7 +18,8 @@ extern "C" fn Finalize() {
         // GIVEN.with(|g| (**g).deleter.unwrap()(*g))
         // (*GIVEN).deleter.unwrap()(GIVEN)
         println!("Call drop");
-        println!("{:?}", (*GIVEN).dl_tensor);
+        // println!("{:?}", (*GIVEN).dl_tensor);
+        dbg!((*GIVEN).dl_tensor);
         ((*GIVEN).deleter.unwrap())(GIVEN)
     };
 }
@@ -32,8 +33,8 @@ extern "C" fn Give(dl_managed_tensor: DLManagedTensor) {
     unsafe {
         // println!("dl_managed{:?}", dl_managed_tensor);
         dbg!(dl_managed_tensor);
-        GIVEN = libc::malloc(std::mem::size_of::<DLManagedTensor>()) as *mut DLManagedTensor;
-        *GIVEN = dl_managed_tensor;
+        // GIVEN = libc::malloc(std::mem::size_of::<DLManagedTensor>()) as *mut DLManagedTensor;
+        GIVEN = Box::into_raw(Box::new(dl_managed_tensor));
     };
 }
 

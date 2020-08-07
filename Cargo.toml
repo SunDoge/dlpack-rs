@@ -1,5 +1,5 @@
 [package]
-name = "dlpack-rs"
+name = "dlpack"
 version = "0.1.0"
 authors = ["SunDoge <384813529@qq.com>"]
 edition = "2018"

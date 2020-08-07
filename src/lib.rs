@@ -1,7 +1,9 @@
 // pub mod container;
-pub mod dlpack;
+mod dlpack;
 // pub mod dlpack_ext;
 pub mod dlpack_impl;
+
+pub use self::dlpack::*;
 
 #[cfg(test)]
 mod tests {

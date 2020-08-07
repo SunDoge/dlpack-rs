@@ -1,5 +1,7 @@
-use super::dlpack::{DLContext, DLDataType, DLDataTypeCode, DLDeviceType, DLTensor};
+use super::{DLContext, DLDataType, DLDataTypeCode, DLDeviceType, DLTensor};
+use std::fmt;
 use std::ptr;
+use std::slice;
 
 impl Default for DLDeviceType {
     fn default() -> Self {
@@ -43,7 +45,11 @@ impl DLDataType {
 
 impl Default for DLDataType {
     fn default() -> Self {
-        DLDataType::new(DLDataTypeCode::DLFloat, 32, 1)
+        DLDataType {
+            code: DLDataTypeCode::DLFloat as u8,
+            bits: 32,
+            lanes: 1,
+        }
     }
 }
 
@@ -58,6 +64,24 @@ impl Default for DLTensor {
             strides: ptr::null_mut(),
             byte_offset: 0,
         }
+    }
+}
+
+impl fmt::Debug for DLTensor {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("DLTensor")
+            .field("data", &self.data)
+            .field("ctx", &self.ctx)
+            .field("ndim", &self.ndim)
+            .field("dtype", &self.dtype)
+            .field("shape", &unsafe {
+                slice::from_raw_parts_mut(self.shape , self.ndim as usize)
+            })
+            .field("strides", &unsafe {
+                slice::from_raw_parts_mut(self.strides, self.ndim as usize)
+            })
+            .field("byte_offset", &self.byte_offset)
+            .finish()
     }
 }
 

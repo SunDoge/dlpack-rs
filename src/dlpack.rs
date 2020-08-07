@@ -83,7 +83,7 @@ pub struct DLDataType {
 
 /// Plain C Tensor object, does not manage memory.
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Copy, Clone)]
 pub struct DLTensor {
     /// The opaque data pointer points to the allocated data. This will be
     /// CUDA device pointer or cl_mem handle in OpenCL. This pointer is always
@@ -143,26 +143,3 @@ pub struct DLManagedTensor {
     /// The destructors deletes the argument self as well.
     pub deleter: Option<unsafe extern "C" fn(self_: *mut DLManagedTensor)>,
 }
-
-// ============================ Extension ============================
-
-// impl Default for DLTensor {
-//     fn default() -> Self {
-//         DLTensor {
-//             data: ptr::null_mut(),
-//             ctx: DLContext {
-//                 device_type: DLDeviceType::DLCPU,
-//                 device_id: 0,
-//             },
-//             ndim: 0,
-//             dtype: DLDataType {
-//                 code: DLDataTypeCode::DLFloat as u8,
-//                 bits: 32,
-//                 lanes: 1,
-//             },
-//             shape: ptr::null_mut(),
-//             strides: ptr::null_mut(),
-//             byte_offset: 0,
-//         }
-//     }
-// }
